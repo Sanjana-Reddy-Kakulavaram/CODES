@@ -1,0 +1,39 @@
+body {
+    background-image: url('imgs5.gif');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+  }
+h1{color:rgb(53, 50, 50);}
+input[type=number]{
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+     border-radius: 20px;
+     border: 1px solid #121213;
+     color: #121213;
+     width: 150px;
+     height: 25px;
+     padding-left: 10px;
+    }
+    
+input[type=number]:focus {
+     outline: none;
+     border: 1px solid #121213;
+     color: #121213;
+}
+input[type=text]{
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+     border-radius: 20px;
+     border: 1px solid #151616;
+     color: #070706;
+     width: 150px;
+     height: 20px;
+     padding-left: 10px;
+    }
+    
+input[type=text]:focus {
+     outline: none;
+     border: 1px solid #151615;
+     color: #0b0c0c;
+}

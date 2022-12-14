@@ -1,0 +1,83 @@
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+unordered_map<ll, vector<ll>> mp;
+vector<ll> dp, vis;
+ll dis[200005] = {1};
+ll mxd=0, ans=0, k;
+
+ll dfs(ll start, ll parent)
+{
+	dp[start] = 1;
+	for(auto x : mp[start])
+	{
+		if(x != parent && !vis[x])
+		{
+			dp[start] += dfs(x, start);
+		}
+	}
+	return dp[start];
+}
+
+ll dfs2(ll start, ll parent, ll val)
+{
+	for(auto x : mp[start])
+	{
+		if(x != parent && !vis[x] && dp[x] > val/2)
+		{
+			return dfs2(x, start, val);
+		}
+	}
+	return start;
+}
+
+void dfs3(ll start, ll parent, ll d, ll flag)
+{
+	if(d > k) return;
+	mxd = max(mxd, d);
+	if(flag) dis[d]++;
+	else ans += dis[k-d];
+	for(auto x : mp[start])
+	{
+		if(x != parent && !vis[x]) dfs3(x, start, d+1, flag);
+	}
+}
+
+void sollution(ll start)
+{
+	dfs(start, 0);
+	ll cnt = dfs2(start, 0, dp[start]);
+	vis[cnt] = 1;
+	mxd = 0;
+	for(auto x : mp[cnt])
+	{
+		if(!vis[x])
+		{
+			dfs3(x, cnt, 1, 0);
+			dfs3(x, cnt, 1, 1);
+		}
+	}
+	for(ll i=1; i<=mxd+1; i++) dis[i] = 0;
+	for(auto x : mp[cnt]){
+		if(!vis[x]) sollution(x);
+	}
+}
+
+int main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+	ll n, a, b;
+	cin >> n >> k;
+	for(ll i=1; i<n; i++)
+	{
+		cin >> a >> b;
+		mp[a].push_back(b);
+		mp[b].push_back(a);
+	}
+	dp.assign(n+1, 0);
+	vis.assign(n+1, 0);
+	sollution(1);
+	cout << ans;
+	return 0;
+}
